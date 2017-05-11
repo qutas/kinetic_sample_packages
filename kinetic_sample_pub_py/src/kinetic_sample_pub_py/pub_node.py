@@ -12,7 +12,7 @@ class Pulser():
 
 		# Another way to a constant-rate publisher
 		# This method would not be needed to be called externally
-		#   i.e. no need for pl.step() in the main
+		#   i.e. no need for pl.step() in the main, can use rospy.spin() instead
 		#self.rate = 10.0 #Hz
 		#self.timer_pulse = rospy.Timer(rospy.Duration(1.0 / self.rate), self.step)
 
