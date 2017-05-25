@@ -3,6 +3,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 #include <std_msgs/Float64MultiArray.h>
+#include <std_msgs/MultiArrayDimension.h>
 
 #include <string>
 
@@ -14,6 +15,7 @@ class Processor {
 		ros::Subscriber sub_camera_info_;
 		image_transport::Subscriber sub_image_;
 		image_transport::Publisher pub_debug_image_;
+		image_transport::Publisher pub_overlay_image_;
 		ros::Publisher pub_detect_;
 
 		bool got_camera_info_;
@@ -22,6 +24,7 @@ class Processor {
 		std::string topic_input_camera_info_;
 		std::string topic_input_image_;
 		std::string topic_output_debug_image_;
+		std::string topic_output_overlay_image_;
 		std::string topic_output_detect_;
 
 	public:
@@ -32,19 +35,21 @@ class Processor {
 			topic_input_camera_info_( "input_camera_info" ),
 			topic_input_image_( "input_image" ),
 			topic_output_debug_image_( "debug_image" ),
+			topic_output_overlay_image_( "overlay_image" ),
 			topic_output_detect_( "circles" ) {
 
 			//Get parameters, or if not defined, use the defaults
 			nh_.param( "topic_input_camera_info", topic_input_camera_info_, topic_input_camera_info_ );
 			nh_.param( "topic_input_image", topic_input_image_, topic_input_image_ );
 			nh_.param( "topic_output_debug_image", topic_output_debug_image_, topic_output_debug_image_ );
+			nh_.param( "topic_output_overlay_image", topic_output_overlay_image_, topic_output_overlay_image_ );
 			nh_.param( "topic_output_detect", topic_output_detect_, topic_output_detect_ );	//We use this topic to send our detection results
 
 			// Subscrive to input video feed and publish output video feed
 			sub_camera_info_ = nh_.subscribe<sensor_msgs::CameraInfo> ( topic_input_camera_info_, 100, &Processor::camera_info_cb, this );
 			pub_debug_image_ = it_.advertise(topic_output_debug_image_, 100);
+			pub_overlay_image_ = it_.advertise(topic_output_overlay_image_, 100);
 			pub_detect_ = nh_.advertise<std_msgs::Float64MultiArray>( topic_output_detect_, 100 );
-
 
 			ROS_INFO("Waiting for camera info...");
 
@@ -105,16 +110,18 @@ class Processor {
 			if(circles.size() > 0) {
 				//Transmit the detection message
 				std_msgs::Float64MultiArray msg_out;
+				std_msgs::MultiArrayDimension tmp_dim;
 
-				msg_out.layout.dim[0].label = "num_detected";
-				msg_out.layout.dim[0].size = circles.size();
-				msg_out.layout.dim[0].stride = 3*1*circles.size();	//dim[0].size is just the size of the entire array
-				msg_out.layout.dim[1].label = "colours_found";	//dim[1] is useless to use here, but fill it in anyway
-				msg_out.layout.dim[1].size = 1;
-				msg_out.layout.dim[1].stride = 3*1;
-				msg_out.layout.dim[2].label = "circle_x_y_size";
-				msg_out.layout.dim[2].size = 3;
-				msg_out.layout.dim[2].stride = 3;
+				tmp_dim.label = "num_detected";
+				tmp_dim.size = circles.size();
+				tmp_dim.stride = 3*circles.size();	//dim[0].size is just the size of the entire array
+				msg_out.layout.dim.push_back( tmp_dim );
+
+				tmp_dim.label = "circle_x_y_size";
+				tmp_dim.size = 3;
+				tmp_dim.stride = 3;
+				msg_out.layout.dim.push_back( tmp_dim );
+
 				msg_out.layout.data_offset = 0;
 
 				for( size_t current_circle = 0; current_circle < circles.size(); ++current_circle ) {
@@ -128,16 +135,22 @@ class Processor {
 
 			//Only compute and send the debug image if a node is subscribed
 			if( pub_debug_image_.getNumSubscribers() > 0 ) {
+				//==-- Output modified video stream
+				pub_debug_image_.publish( cv_bridge::CvImage( msg_in->header, "mono8", red_hue_image ).toImageMsg() );
+			}
+
+			//Only compute and send the overlay image if a node is subscribed
+			if( pub_overlay_image_.getNumSubscribers() > 0 ) {
 				if( circles.size() > 0 ) {
 					for( size_t current_circle = 0; current_circle < circles.size(); ++current_circle ) {
 						cv::Point center( std::round( circles[current_circle][0] ), std::round( circles[current_circle][1] ) );
 						int radius = std::round( circles[current_circle][2] );
-						cv::circle( cv_ptr->image, center, radius, cv::Scalar(0, 255, 0), 5 );
+						cv::circle( cv_ptr->image, center, radius, cv::Scalar( 0, 255, 0 ), 5 );
 					}
 				}
 
 				//==-- Output modified video stream
-				pub_debug_image_.publish(cv_ptr->toImageMsg());
+				pub_overlay_image_.publish( cv_ptr->toImageMsg() );
 			}
 		}
 };
