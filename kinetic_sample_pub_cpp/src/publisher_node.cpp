@@ -39,7 +39,6 @@ class Pulser {
 			std_msgs::Empty msg_out;
 
 			pub_ping_.publish( msg_out );
-
 		}
 };
 

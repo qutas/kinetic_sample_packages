@@ -1,0 +1,9 @@
+<launch>
+	<node pkg="kinetic_sample_image_proccessing" type="processor_node" name="image_proc" clear_params="true" output="screen">
+		<!-- Operation Parameters -->
+		<param name="topic_input_camera_info" value="/camera_info" type="str"/>
+		<param name="topic_input_image" value="/image" type="str"/>
+		<param name="topic_output_debug_image" value="debug_image" type="str"/>
+		<param name="topic_output_detect" value="detected_circles" type="str"/>
+	</node>
+</launch>
