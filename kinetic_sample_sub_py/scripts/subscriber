@@ -5,7 +5,7 @@ from kinetic_sample_sub_py.sub_node import Spinner
 
 if __name__ == '__main__':
 	# Initialize
-	rospy.init_node('spinner', anonymous=True)
+	rospy.init_node('spinner_py', anonymous=True)
 
 	sp = Spinner()
 

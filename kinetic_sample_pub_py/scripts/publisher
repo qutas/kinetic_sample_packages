@@ -5,7 +5,7 @@ from kinetic_sample_pub_py.pub_node import Pulser
 
 if __name__ == '__main__':
 	#Initialize
-	rospy.init_node('pulser', anonymous=True)
+	rospy.init_node('pulser_py', anonymous=True)
 
 	pl = Pulser()
 	rate = rospy.Rate(10) # 10hz

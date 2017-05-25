@@ -1,0 +1,7 @@
+<launch>
+	<node pkg="kinetic_sample_pub_cpp" type="publisher_node" name="pulser" clear_params="true" output="screen">
+		<!-- Operation Parameters -->
+		<param name="rate_ping" value="10.0" type="double"/>
+		<param name="topic_output_ping" value="/ping_sample" type="str"/>
+	</node>
+</launch>
