@@ -4,6 +4,7 @@
 		<param name="topic_input_camera_info" value="/camera/camera_info" type="str"/>
 		<param name="topic_input_image" value="/camera/image_raw" type="str"/>
 		<param name="topic_output_debug_image" value="debug_image" type="str"/>
+		<param name="topic_output_overlay_image" value="overlay_image" type="str"/>
 		<param name="topic_output_detect" value="detected_circles" type="str"/>
 	</node>
 
