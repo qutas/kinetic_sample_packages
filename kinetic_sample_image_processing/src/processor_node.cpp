@@ -62,7 +62,7 @@ class Processor {
 
 			sub_image_ = it_.subscribe(topic_input_image_, 100, &Processor::image_cb, this);
 
-			ROS_INFO("Begining detection...");
+			ROS_INFO("Beginning detection...");
 		}
 
 		~Processor() {
