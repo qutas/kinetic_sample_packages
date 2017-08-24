@@ -1,0 +1,18 @@
+<launch>
+	<node pkg="kinetic_sample_solvepnp_py" type="estimator" name="pose_estimator" clear_params="true" output="screen">
+		<param name="topic_camera_info" value="/cv_camera/camera_info" type="str"/>
+		<param name="topic_image_input" value="/cv_camera/image_raw" type="str"/>
+		<param name="topic_image_debug" value="~debug/image_raw" type="str"/>
+		<param name="topic_image_overlay" value="~overlay/image_raw" type="str"/>
+		<param name="topic_pose" value="~pose" type="str"/>
+
+		<param name="circle_radius" value="0.2" type="double"/>
+		<!-- HSV parameters are in OpenCV range [H:0->180, S:0->255, V:0->255] -->
+		<param name="circle_h_min" value="90" type="int"/>
+		<param name="circle_s_min" value="100" type="int"/>
+		<param name="circle_v_min" value="100" type="int"/>
+		<param name="circle_h_max" value="150" type="int"/>
+		<param name="circle_s_max" value="255" type="int"/>
+		<param name="circle_v_max" value="255" type="int"/>
+	</node>
+</launch>

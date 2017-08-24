@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(kinetic_sample_image_sub_py)
+project(kinetic_sample_solvepnp_py)
 
 ## Add support for C++11, supported in ROS Kinetic and newer
 # add_definitions(-std=c++11)
@@ -9,7 +9,7 @@ project(kinetic_sample_image_sub_py)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   rospy
-  std_msgs
+  geometry_msgs
   sensor_msgs
   cv_bridge
 )
@@ -161,7 +161,7 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
-  scripts/subscriber
+  scripts/estimator
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>kinetic_sample_image_sub_py</name>
+  <name>kinetic_sample_solvepnp_py</name>
   <version>0.0.0</version>
-  <description>The kinetic_sample_image_sub_py package</description>
+  <description>The kinetic_sample_solvepnp_py package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -42,8 +42,8 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <run_depend>rospy</run_depend>
-  <run_depend>std_msgs</run_depend>
   <run_depend>sensor_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
   <run_depend>cv_bridge</run_depend>
 
 
