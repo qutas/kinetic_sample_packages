@@ -7,4 +7,6 @@
 		<param name="topic_output_overlay_image" value="overlay_image" type="str"/>
 		<param name="topic_output_detect" value="detected_circles" type="str"/>
 	</node>
+
+	<node pkg="cv_camera" type="cv_camera_node" name="camera" clear_params="true" output="screen"/>
 </launch>

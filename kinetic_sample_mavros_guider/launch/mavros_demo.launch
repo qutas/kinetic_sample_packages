@@ -19,5 +19,8 @@
 		<arg name="log_output" value="$(arg log_output)" />
 	</include>
 
-	<node pkg="kinetic_sample_mavros_guider" type="kinetic_sample_mavros_guider_node" name="guider" clear_params="true" output="screen"/>
+	<node pkg="kinetic_sample_mavros_guider" type="mavros_guider_node" name="guider" clear_params="true" output="screen">
+		<param name="topic_output_pose" value="/mavros/setpoint_position/local" type="str"/>
+		<param name="rate_command_output" value="25.0" type="double"/>
+	</node>
 </launch>
