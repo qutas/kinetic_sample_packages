@@ -2,7 +2,7 @@
 
 #include <ros/ros.h>
 
-#include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/TransformStamped.h>
 
 class Spinner {
 	private:
@@ -18,5 +18,5 @@ class Spinner {
 		~Spinner( void );
 
 		void callback_ping(const ros::TimerEvent& e);
-		void callback_transform(const std_msgs::PoseStamped::ConstPtr& msg_in);
+		void callback_transform(const geometry_msgs::TransformStamped::ConstPtr& msg_in);
 };

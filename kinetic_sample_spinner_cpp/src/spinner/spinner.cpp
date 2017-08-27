@@ -1,5 +1,7 @@
 #include <ros/ros.h>
 
+#include <spinner/spinner.h>
+
 #include <std_msgs/Empty.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -10,8 +12,8 @@ Spinner::Spinner() :
 	timer_ = nh_.createTimer(ros::Duration(1.0), &Spinner::callback_ping, this );
 	pub_ping_ = nh_.advertise<std_msgs::Empty>("/ping", 10);
 
-	sub_transform_ = nh_.subscribe<std_msgs::TransformStamped>( "/transform", 10, &Spinner::callback_transform, this );
-	pub_pose_ = nh_.advertise<std_msgs::PoseStamped>("/pose", 10);
+	sub_transform_ = nh_.subscribe<geometry_msgs::TransformStamped>( "/transform", 10, &Spinner::callback_transform, this );
+	pub_pose_ = nh_.advertise<geometry_msgs::PoseStamped>("/pose", 10);
 }
 
 Spinner::~Spinner() {
@@ -22,7 +24,7 @@ void Spinner::callback_ping(const ros::TimerEvent& e) {
 	pub_ping_.publish(msg_out);
 }
 
-void Spinner::callback_transform(const std_msgs::PoseStamped::ConstPtr& msg_in) {
+void Spinner::callback_transform(const geometry_msgs::TransformStamped::ConstPtr& msg_in) {
 	geometry_msgs::PoseStamped msg_out;
 
 	msg_out.header = msg_in->header;
