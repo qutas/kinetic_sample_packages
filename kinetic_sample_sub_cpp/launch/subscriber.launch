@@ -1,6 +1,0 @@
-<launch>
-	<node pkg="kinetic_sample_sub_cpp" type="subscriber_node" name="spinner" clear_params="true" output="screen">
-		<!-- Operation Parameters -->
-		<param name="topic_input_ping" value="/ping_sample" type="str"/>
-	</node>
-</launch>

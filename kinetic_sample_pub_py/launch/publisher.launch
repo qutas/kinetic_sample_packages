@@ -1,3 +1,0 @@
-<launch>
-	<node pkg="kinetic_sample_pub_py" type="publisher" name="pulser" clear_params="true" output="screen"/>
-</launch>

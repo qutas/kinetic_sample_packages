@@ -1,3 +1,0 @@
-<launch>
-	<node pkg="kinetic_sample_sub_py" type="subscriber" name="spinner" clear_params="true" output="screen"/>
-</launch>
