@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+import rospy
+from kinetic_sample_database_connector.db_conn import DBConn
+
+if __name__ == '__main__':
+	# Initialize
+	rospy.init_node('db_conn_py', anonymous=True)
+
+	dbc = DBConn()
+
+	# Loop here until quit
+	try:
+		rospy.spin()
+	except rospy.ROSInterruptException:
+		# Shutdown
+		rospy.loginfo("Shutting down...")
+		dbc.shutdown()
+
