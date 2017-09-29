@@ -55,7 +55,7 @@ MavrosGuider::MavrosGuider() :
 
 		if( ( ros::Time::now() - last_request ) > ros::Duration(5.0) ) {
 			if( msg_current_state_.mode != "OFFBOARD" ) {
-				if( client_set_mode_.call(msg_set_mode_) && msg_set_mode_.response.success ) {
+				if( client_set_mode_.call(msg_set_mode_) && msg_set_mode_.response.mode_sent ) {
 					ROS_INFO("Offboard mode enabled!");
 				}
 			} else if( !msg_current_state_.armed ) {
