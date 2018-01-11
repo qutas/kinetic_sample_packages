@@ -1,0 +1,11 @@
+# This service acts as a remote on/off switch
+
+# Request:
+#	- onoff: set to true to turn switch on
+# Response:
+#	- success: gives feedback on if the switch was successful
+
+
+bool onoff
+---
+bool success
