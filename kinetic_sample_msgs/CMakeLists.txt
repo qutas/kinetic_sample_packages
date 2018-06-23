@@ -105,8 +105,8 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES kinetic_sample_msgs
 #  CATKIN_DEPENDS message_generation roscpp rospy std_msgs
-  DEPENDS
-  kinetic_sample_msgs_generate_messages_cpp
+#  DEPENDS
+#  kinetic_sample_msgs_generate_messages_cpp
 )
 
 ###########
